@@ -6,15 +6,15 @@ on:
       kernel_source:
         description: 'URL of the Kernel Source (Git)'
         required: true
-        default: 'https://github.com/OnePlus-Nord-CE4-Development/kernel_oneplus_benz' # Example placeholder
+        default: 'https://github.com/amit8705/kernel_xiaomi_mt6785ER' # Example placeholder
       kernel_branch:
         description: 'Branch to build'
         required: true
         default: 'main'
       defconfig_name:
-        description: 'Defconfig file name (e.g., vendor/benz_defconfig)'
+        description: begonia_user_defconfig
         required: true
-        default: 'vendor/benz_defconfig'
+        default: begonia_user_defconfig
 
 jobs:
   build-kernel:
