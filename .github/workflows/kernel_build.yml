@@ -49,7 +49,6 @@ jobs:
         # Clones Proton Clang (Version 13) - Stable for Android 10-12 kernels
         git clone --depth=1 https://github.com/kdrag0n/proton-clang clang
         echo "CLANG_PATH=$(pwd)/clang" >> $GITHUB_ENV
-
     - name: Build Kernel
       working-directory: ${{ env.KERNEL_ROOT }}
       run: |
@@ -58,6 +57,12 @@ jobs:
         export ARCH=arm64
         export SUBARCH=arm64
         
+        # --- FIX: Patch the broken defconfig lines ---
+        # Removes quotes around 0x3 and 0xC in the defconfig file
+        sed -i 's/"0x3"/0x3/g' arch/arm64/configs/${{ inputs.defconfig_name }}
+        sed -i 's/"0xC"/0xC/g' arch/arm64/configs/${{ inputs.defconfig_name }}
+        # ---------------------------------------------
+
         # Clean build directory
         make O=out clean
         make O=out mrproper
@@ -66,7 +71,6 @@ jobs:
         make O=out ${{ inputs.defconfig_name }}
 
         # Build
-        # LLVM=1 enables the full LLVM toolchain (Clang, LLD, etc.)
         make -j$(nproc --all) O=out \
              LLVM=1 \
              LLVM_IAS=1 \
