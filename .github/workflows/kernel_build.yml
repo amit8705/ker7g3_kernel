@@ -10,7 +10,7 @@ on:
       kernel_branch:
         description: 'Branch to build'
         required: true
-        default: 'main'
+        default: 'derp'
       defconfig_name:
         description: begonia_user_defconfig
         required: true
