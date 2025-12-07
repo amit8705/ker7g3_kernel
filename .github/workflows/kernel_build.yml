@@ -44,14 +44,11 @@ jobs:
         git clone --depth=1 -b ${{ inputs.kernel_branch }} ${{ inputs.kernel_source }} android_kernel
         echo "KERNEL_ROOT=$(pwd)/android_kernel" >> $GITHUB_ENV
 
-    - name: Setup Clang Toolchain (AOSP Clang)
+    - name: Setup Clang Toolchain (Proton - Recommended for MT6785)
       run: |
-        mkdir -p clang
-        cd clang
-        # Downloading a stable AOSP Clang version (Example: r450784d) suitable for Android 14/15
-        wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r487747c.tar.gz
-        tar -xzf clang-r487747c.tar.gz
-        echo "CLANG_PATH=$(pwd)" >> $GITHUB_ENV
+        # Clones Proton Clang (Version 13) - Stable for Android 10-12 kernels
+        git clone --depth=1 https://github.com/kdrag0n/proton-clang clang
+        echo "CLANG_PATH=$(pwd)/clang" >> $GITHUB_ENV
 
     - name: Build Kernel
       working-directory: ${{ env.KERNEL_ROOT }}
